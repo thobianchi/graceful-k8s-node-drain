@@ -6,7 +6,7 @@ if [ $# -lt 2 ]; then
 fi
 
 echo "condoning node $2"
-# echo debug kubectl cordon node $2
+# echo debug kubectl cordon $2
 kubectl get pods --all-namespaces --field-selector="spec.nodeName=$2" -o jsonpath='{range .items[*]}{.metadata.namespace},{.metadata.name},{.metadata.ownerReferences[0].kind},{.metadata.ownerReferences[0].name}{"\n"}{end}' | \
 while IFS="," read namespace name ownerKind ownerName ; do
  	if [ "$ownerKind" != "ReplicaSet" ] ; then
